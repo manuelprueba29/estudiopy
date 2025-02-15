@@ -35,7 +35,8 @@ class User:
         
         if book.available:
             book.borrow()
-            self.borrow_books.append(book)
+            self.borrowed_books.append(book)
+            print("Libro prestadooooo")
         
         else:
             print(f"El libro{book.title} no esta disponible")
@@ -69,9 +70,9 @@ class Biblioteca:
         else:
             print(f"El libro {book.title} no se encuentra en la base de datos  por lo tanto no se puede eliminar")
             
-    def searchLibro(self, book):
-        if book in self.libros:
-            print(f"Los datos del libro {book.title} son {book}")
+    def Listbooks(self):
+        for book in self.libros:
+            print(f" libro {book.title} ")
             
     def RegistreUser(self, user):
         
@@ -102,9 +103,21 @@ class Biblioteca:
 book1 = Book("1984", "george orwel")
 book2 = Book("Ciend años de soledad", "Gabriel Garcia Marquez")
 
+User1= User("Manuel Cristobal", "1035437457")
+User2= User("Ronal moreno", "1035437457")
+
+User1.borrow_books(book1)
+  
+
 Biblioteca_San_Martin=Biblioteca("San Martin")
 Biblioteca_San_Martin.AggLibros(book1)
 Biblioteca_San_Martin.AggLibros(book2)
+Biblioteca_San_Martin.Listbooks()
+Biblioteca_San_Martin.RegistreUser(User1)
+Biblioteca_San_Martin.RegistreDates(User1, book1)
+
+
+
                 
                 
                 
