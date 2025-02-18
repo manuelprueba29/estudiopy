@@ -46,20 +46,24 @@ class User_History:
     def __init__(self, user):
         
         self.user=user
-        self.vehicles_purchases=[]
+        self.vehicles_purchases={} # vehiculos comprados
         
     def vehicle_purchase(self, vehicle):
         
-        if vehicle not in self.vehicles_purchases:
-            self.vehicles_purchases.append(vehicle)
+        if vehicle.plate not in self.vehicles_purchases:
+            self.vehicles_purchases[vehicle.plate]=vehicle
             print(f"el vehiculo con placa {vehicle.plate} ya fue  comprado por {self.user.Name}")
         
         else:
             print(f"EL vehiculo con placa ya fue comprado por el usuario {self.user.Name}")
             
     def Vehicle_list(self):
-        for vehicle in self.vehicles_purchases:
-            print(f"Vehicle purchase: {vehicle.brand} {vehicle.model}, placa:{vehicle.plate}") # revisar y entender
+        if not self.vehicles_purchases:
+            print(f"El user {self.user.Name} no ha comprado ningun carro")
+            return
+        print(f"vehiculo comprado por {self.user.Name}")
+        for palte, vehicle in self.vehicles_purchases.items():
+            print(f"Vehicle purchase: {vehicle.brand} {vehicle.model}, placa:{vehicle.plate}") # revisar y entender muestra la referencia de el vehiculo que comro el usario
             
 
 class UserGestor:
@@ -141,14 +145,72 @@ class UserGestor:
                 user.MostrarInfo() # Llamamos a la función de cada usuario entender bien el concepto
              
             
-                
-        
             
+class GestionConcepcionario: 
+    def __init__(self, name):
+        self.name = name
+        self.inventario = {}  # Diccionario de vehículos disponibles
+        self.ventas = []  # Lista de vehículos vendidos
+        self.empleados = []  # Lista de empleados registrados
+    
+    def agregar_vehiculo(self, vehiculo):
+        """Agrega un vehículo al inventario."""
+        if vehiculo.plate not in self.inventario:
+            self.inventario[vehiculo.plate] = vehiculo
+            print(f"Vehículo {vehiculo.brand} {vehiculo.model} agregado al inventario.")
+        else:
+            print(f"El vehículo con placa {vehiculo.plate} ya está en el inventario.")
+    
+    def listar_vehiculos_disponibles(self):
+        """Lista los vehículos disponibles en el inventario."""
+        if not self.inventario:
+            print("No hay vehículos disponibles en el concesionario.")
+        else:
+            print("Vehículos disponibles:")
+            for vehiculo in self.inventario.values():
+                vehiculo.MostrarInfo()
+    
+    def vender_vehiculo(self, placa, usuario):
+        """Vende un vehículo a un usuario, lo elimina del inventario y lo agrega al historial del usuario."""
+        if placa in self.inventario:
+            vehiculo = self.inventario.pop(placa)  # Eliminar el vehículo del inventario
+            self.ventas.append(vehiculo)  # Agregarlo a la lista de ventas
+            usuario_historial = User_History(usuario)  # Crear historial si no existe
+            usuario_historial.vehicle_purchase(vehiculo)  # Registrar la compra
+            print(f"Vehículo {vehiculo.brand} {vehiculo.model} vendido a {usuario.Name}.")
+        else:
+            print(f"No se encontró un vehículo con placa {placa}.")
+    
+    def registrar_empleado(self, empleado):
+        """Registra un nuevo empleado en el concesionario."""
+        if empleado.Id not in [e.Id for e in self.empleados]:
+            self.empleados.append(empleado)
+            print(f"Empleado {empleado.Name} registrado correctamente.")
+        else:
+            print(f"El empleado con ID {empleado.Id} ya está registrado.")
+    
+    def listar_empleados(self):
+        """Lista los empleados del concesionario."""
+        if not self.empleados:
+            print("No hay empleados registrados en el concesionario.")
+        else:
+            print("Lista de empleados:")
+            for empleado in self.empleados:
+                empleado.MostrarInfoUser()
+
             
 vehiculo1=Vehiculo("Camioneta", "Rojo", "Dre76f", "Mazda", "2025", "Cuatro puerta")    
 vehiculo1.MostrarInfo()   
 
+
+
 user1=User("Manuel", "manuel199729♠4gmail.com", "1035437457")
+
+historial1=User_History(user1)
+
+historial1.vehicle_purchase(vehiculo1)
+
+historial1.Vehicle_list()
 
 Gestionando1=UserGestor()
 
