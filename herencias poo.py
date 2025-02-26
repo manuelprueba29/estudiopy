@@ -14,6 +14,16 @@ crear dos metodos
 * detener el funcionamiento
 
 """
+
+# aqui se explica toda la teoria de herencia y muestra a la clase padre que en este caso es vehiculo(Esto es polimorfismo)
+"""
+El polimorfismo en programación orientada a objetos se refiere a la capacidad de una clase derivada de modificar el comportamiento de un método heredado de su clase base. 
+En este caso:
+La clase padre Vehicle define los métodos start_engine y stop_engine, pero como métodos abstractos (con raise NotImplementedError).
+Las subclases (Car, Bike, Truck) implementan estos métodos con su propio comportamiento.
+Al llamar start_engine o stop_engine en un objeto de cualquier subclase, se ejecutará la versión correspondiente según el tipo de vehículo.
+
+"""
 class Vehicle:
     
     def __init__(self, brand, model, price):
@@ -38,10 +48,10 @@ class Vehicle:
         return self.price
     
     def start_engine(self):  # iniciar motor
-        raise NotImplementedError("Este metodo debe ser implementado pór la subclase")
+        raise NotImplementedError("Este metodo debe ser implementado pór la subclase") #esto es una excepcion
     
     def stop_engine(self):  # parar motor
-        raise NotImplementedError("Este metodo debe ser implementado pór la subclase")
+        raise NotImplementedError("Este metodo debe ser implementado pór la subclase") #esto es una excepcion
         
         
 class car(Vehicle):
@@ -88,7 +98,7 @@ class Truck(Vehicle): #clase camion
         else:
             return f"El motor del Camion {self.brand} no esta disponible"
         
-class Customer: #clase cliente
+class Customer: #clase cliente comprador
     
   
     def __init__(self, name):
@@ -154,6 +164,8 @@ Dealership1.add_vehicles(truck1)
 #MOstrar vehiculos disponibles
 
 Dealership1.show_available_vehicle()
+
+# 4 fundamentos de la programacion orientada a objetos herencia. abstraccion, encapsulamiento y polimorfismo. en la clase 27 empiezan a explicar el polimorfismos 
 
 
 
